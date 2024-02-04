@@ -1,16 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
-import Chart from "chart.js";
+import React, { useEffect, useRef } from "react";
+import { Chart, ChartConfiguration } from "chart.js";
+import Link from "next/link";
 
 const Graph = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const lineChartRef = useRef<Chart>();
   useEffect(() => {
-    var config = {
+    var config: ChartConfiguration = {
       type: "line",
       data: {
         labels: ["2020", "2021", "2022", "2023", "2024"],
         datasets: [
           {
-            label: new Date().getFullYear(),
+            label: String(new Date().getFullYear()),
             backgroundColor: "#3182ce",
             borderColor: "#3182ce",
             data: [5, 10, 12, 70, 75],
@@ -27,15 +30,14 @@ const Graph = () => {
           fontColor: "white",
         },
         legend: {
+          // @ts-ignore
           display: false,
         },
         tooltips: {
-          display: false,
           mode: "index",
           intersect: false,
         },
         hover: {
-          display: false,
           mode: "nearest",
           intersect: true,
         },
@@ -53,11 +55,11 @@ const Graph = () => {
               gridLines: {
                 display: false,
                 borderDash: [2],
-                borderDashOffset: [2],
+                borderDashOffset: 2,
                 color: "#FFC0CB",
                 zeroLineColor: "#FFC0CB",
                 zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
+                zeroLineBorderDashOffset: 2,
               },
             },
           ],
@@ -75,40 +77,33 @@ const Graph = () => {
               gridLines: {
                 display: true,
                 borderDash: [6],
-                borderDashOffset: [3],
+                borderDashOffset: 3,
                 drawBorder: false,
                 color: "#e1ebfa",
                 zeroLineColor: "#e1ebfa",
                 zeroLineBorderDash: [0],
-                zeroLineBorderDashOffset: [2],
+                zeroLineBorderDashOffset: 2,
               },
             },
           ],
         },
       },
     };
-    const canvas = document.getElementById(
-      "line-chart"
-    ) as HTMLCanvasElement | null;
-    if (canvas) {
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        // @ts-ignore
-        (window as any).myLine = new Chart(ctx, config);
-      } else {
-        console.error("Unable to get 2D context from canvas.");
-      }
-    } else {
-      console.error("Canvas element with ID 'line-chart' not found.");
+
+    if (canvasRef.current) {
+      const ctx = canvasRef.current.getContext(
+        "2d"
+      ) as CanvasRenderingContext2D;
+      if (lineChartRef.current) lineChartRef.current.destroy();
+      lineChartRef.current = new Chart(ctx, config);
     }
   }, []);
 
   return (
     <div>
       <div className=" translate-y-8 translate-x-[-4px] mb-2">
-        {/* Chart */}
         <div className="">
-          <canvas id="line-chart"></canvas>
+          <canvas ref={canvasRef}></canvas>
         </div>
       </div>
     </div>
@@ -117,7 +112,10 @@ const Graph = () => {
 
 const Card = () => {
   return (
-    <div className="py-5 z-50 group px-5 bg-white hover:border-[1px] border-[1px] border-transparent hover:border-blue-500 transition-all duration-500 cursor-pointer  shadow-md rounded-md ">
+    <Link
+      href={"/topic/Ai-Logo-Generator"}
+      className="py-5 z-50 group px-5 bg-white hover:border-[1px] border-[1px] border-transparent hover:border-blue-500 transition-all duration-500 cursor-pointer  shadow-md rounded-md "
+    >
       <div className="flex justify-between">
         <h2 className="font-medium text-[15px] group-hover:text-blue-700">
           Ai Logo Generator
@@ -145,7 +143,7 @@ const Card = () => {
           EXPLODING
         </button>
       </div>
-    </div>
+    </Link>
   );
 };
 
