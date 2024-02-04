@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "chart.js": "2.9.3",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.41",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
