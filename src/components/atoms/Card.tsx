@@ -67,6 +67,7 @@ const Graph = () => {
             {
               ticks: {
                 fontColor: "rgba(255,255,255,.7)",
+                stepSize: 20,
               },
               display: true,
               scaleLabel: {

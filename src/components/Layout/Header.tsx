@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { LOGO } from "../SVGS";
+import Link from "next/link";
+
 
 const Header = () => {
   const [drop, setDrop] = useState(false);
@@ -8,7 +10,9 @@ const Header = () => {
     <div className="w-full z-50 lg:max-w-7xl lg:py-8 py-5 lg:px-0   mx-auto">
       <div className="flex  z-50 justify-between items-center">
         <div className="lg:scale-100  scale-90">
-          <LOGO />
+          <Link href={"/"}>
+            <LOGO />
+          </Link>
         </div>
         <div className="lg:flex hidden gap-x-14 items-center">
           <li className="list-none font-semibold cursor-pointer text-[#595D73] text-sm hover:text-black">
